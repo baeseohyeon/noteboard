@@ -35,16 +35,8 @@ public class PostController {
     }
 
     @GetMapping("/post/write")
-    public String write(@AuthenticationPrincipal AccountAdapter accountAdapter){
-
-        Account account = accountAdapter.getAccount();
-        System.out.println(account);
-
-        if(account==null){
-            return "writefail.html";
-        }else {
+    public String write(){
             return "board/write.html";
-        }
     }
     @PostMapping("/post/write")
     public String write( Post post, @AuthenticationPrincipal AccountAdapter accountAdapter){
