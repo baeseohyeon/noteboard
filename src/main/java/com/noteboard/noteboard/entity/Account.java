@@ -22,7 +22,7 @@ public class Account{
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "account")
     private List<Post> posts = new ArrayList<>();
 
 

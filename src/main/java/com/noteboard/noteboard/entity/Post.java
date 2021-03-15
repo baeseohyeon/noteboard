@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +27,9 @@ public class Post extends TimeEntity{
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<UploadFile> uploadFiles=new ArrayList<>();
+
 
     private static Post createPost(Account account, String title, String content, String writer){
         Post post = new Post();
@@ -33,6 +38,17 @@ public class Post extends TimeEntity{
         post.setContent(content);
         post.setWriter(writer);
         return post;
+    }
+
+    public void addAccount(Account account){
+        this.setAccount(account);
+        account.getPosts().add(this);
+    }
+
+
+    public void addFile(UploadFile uploadFile){
+        uploadFiles.add(uploadFile);
+        uploadFile.setPost(this);
     }
 
 
