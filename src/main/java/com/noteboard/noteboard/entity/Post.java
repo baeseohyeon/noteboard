@@ -3,11 +3,13 @@ package com.noteboard.noteboard.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 @Entity
 @Getter @Setter
@@ -20,7 +22,6 @@ public class Post extends TimeEntity{
 
     private String title;
     private String content;
-
     private String writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,28 +31,19 @@ public class Post extends TimeEntity{
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private List<UploadFile> uploadFiles=new ArrayList<>();
 
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
 
-    private static Post createPost(Account account, String title, String content, String writer){
-        Post post = new Post();
-        post.setAccount(account);
-        post.setTitle(title);
-        post.setContent(content);
-        post.setWriter(writer);
-        return post;
+
+
+    public void setAccount(Account account){
+        this.account=account;
+        this.account.getPosts().add(this); // 이부분 에러
     }
-
-    public void addAccount(Account account){
-        this.setAccount(account);
-        account.getPosts().add(this);
-    }
-
-
     public void addFile(UploadFile uploadFile){
         uploadFiles.add(uploadFile);
         uploadFile.setPost(this);
     }
-
-
 
     @Override
     public boolean equals(Object o) {

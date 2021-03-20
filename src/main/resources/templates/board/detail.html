@@ -11,6 +11,17 @@
 
 <p th:text="${postDto.content}"></p>
 
+<tr th:each = "c : ${commentDtos}">
+    <td th:text = "${c.writer}"></td>
+    <td th:text = "${c.content}"></td>
+</tr>
+
+<form th:action="@{'/post/'+${postDto.id}+'/comment'}" method="post">
+    댓글 작성자 : <input type="text" name = writer>
+    내용 : <textarea name="content"></textarea><br>
+    <input type="submit" value="등록">
+</form>
+
 <!-- 수정/삭제 -->
 <div>
 

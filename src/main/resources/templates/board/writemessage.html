@@ -5,12 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<form  action="/post/write" method="post" enctype="multipart/form-data">
+<form  action="/user/message" method="post" >
 
-    제목 : <input type="text" name="title"> <br>
-    작성자 : <input type="text" name="writer"> <br>
+    메세지 받는사람 : <input type="text" name="to"> <br>
     <textarea name="content"></textarea><br>
-    파일 : <input type = "file" name = "file">
     <input type="submit" value="등록">
 </form>
 </body>

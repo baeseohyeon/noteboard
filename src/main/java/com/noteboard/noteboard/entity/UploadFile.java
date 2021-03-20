@@ -1,5 +1,6 @@
 package com.noteboard.noteboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +27,14 @@ public class UploadFile {
     private Long size;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public void setPost(Post post){
+        post.getUploadFiles().add(this);
+        this.post=post;
+    }
+
 
 }

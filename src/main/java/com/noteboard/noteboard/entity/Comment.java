@@ -1,6 +1,7 @@
 package com.noteboard.noteboard.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +9,9 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Comment {
-
 
 
     @Id
@@ -18,25 +19,30 @@ public class Comment {
     @Column(name = "comment_id")
     private Long id;
 
-    private String title;
     private String content;
-
     private String writer;
 
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Comment comment = (Comment) o;
-        return Objects.equals(id, comment.id) && Objects.equals(title, comment.title) && Objects.equals(content, comment.content) && Objects.equals(writer, comment.writer) && Objects.equals(post, comment.post);
+    public void setPost(Post post){
+        this.post = post;
+        post.getComments().add(this);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, content, writer, post);
+    public void setAccount(Account account){
+        this.account=account;
+        account.getComments().add(this);
     }
+
+
 }

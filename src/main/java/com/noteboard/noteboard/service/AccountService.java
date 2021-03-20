@@ -68,4 +68,12 @@ public class AccountService implements UserDetailsService {
     //    return new User(account.getEmail(), account.getPassword(), authorities);
         return new AccountAdapter(account.getUsername(),account.getPassword(),authorities,account);
     }
+
+    public Account findByName(String name) {
+        return accountRepository.findByUsername(name);
+    }
+
+    public List<Account> findAll() {
+        return accountRepository.findAll();
+    }
 }

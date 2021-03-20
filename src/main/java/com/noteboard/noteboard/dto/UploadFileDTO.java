@@ -2,9 +2,11 @@ package com.noteboard.noteboard.dto;
 
 import com.noteboard.noteboard.entity.UploadFile;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@NoArgsConstructor
 public class UploadFileDTO {
     private String fileName;
     private String fileDownloadUri;

@@ -2,7 +2,9 @@ package com.noteboard.noteboard.service;
 
 
 import com.noteboard.noteboard.dto.PostDTO;
+import com.noteboard.noteboard.entity.Account;
 import com.noteboard.noteboard.entity.Post;
+import com.noteboard.noteboard.entity.UploadFile;
 import com.noteboard.noteboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +41,9 @@ public class PostService {
     }
 
     public void updatePost(Post post){
-        postRepository.save(post);
+        post.setTitle(post.getTitle());
+        post.setContent(post.getContent());
+        post.setWriter(post.getWriter());
 
     }
 
@@ -97,4 +102,21 @@ public class PostService {
 
         return pageList;
     }
+
+    public void addPost(Account account, Post post) {
+        post.setAccount(account);
+        postRepository.save(post);
+    }
+
+    public void addFile(Long postId,UploadFile file){
+        Post post = postRepository.findById(postId).get();
+        file.setPost(post);
+        postRepository.save(post);
+    }
+    public void addFiles(List<UploadFile> files,Long postId){
+        Post post = postRepository.findById(postId).get();
+        files.forEach(file -> file.setPost(post));
+        postRepository.save(post);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.noteboard.noteboard.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +23,18 @@ public class Account{
     private String email;
     private String password;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<Post> posts = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private List<Comment> comments = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "account")
+    private List<Message> messages = new ArrayList<>();
 
 
     @Override

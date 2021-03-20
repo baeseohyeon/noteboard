@@ -1,6 +1,7 @@
 package com.noteboard.noteboard.service;
 
 
+import com.noteboard.noteboard.entity.Account;
 import com.noteboard.noteboard.entity.Comment;
 import com.noteboard.noteboard.entity.Post;
 import com.noteboard.noteboard.repository.CommentRepository;
@@ -31,10 +32,14 @@ public class CommentService {
         commentRepository.deleteById(commentId);
     }
 
-    public void updateComment(Long id, String title, String writer,String content){
+    public void updateComment(Long id, String writer,String content){
         Comment comment=commentRepository.findById(id).get();
         comment.setContent(content);
         comment.setWriter(writer);
-        comment.setTitle(title);
+    }
+
+    public void addComment(Comment comment, Post post, Account account) {
+        comment.setPost(post);
+        comment.setAccount(account);
     }
 }
