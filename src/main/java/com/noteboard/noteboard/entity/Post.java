@@ -34,27 +34,10 @@ public class Post extends TimeEntity{
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
-
-
-    public void setAccount(Account account){
-        this.account=account;
-        this.account.getPosts().add(this); // 이부분 에러
-    }
     public void addFile(UploadFile uploadFile){
         uploadFiles.add(uploadFile);
         uploadFile.setPost(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Post post = (Post) o;
-        return id.equals(post.id) && title.equals(post.title) && content.equals(post.content);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, content);
-    }
 }

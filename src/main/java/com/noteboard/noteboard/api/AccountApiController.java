@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,13 +20,16 @@ import java.util.stream.Collectors;
 public class AccountApiController {
 
     private final AccountService accountService;
-
-    @GetMapping("/api/accounts")
-    public List<AccountDTO> accounts(){
+    private final EntityManager em;
+    @GetMapping("/api/v1/accounts")
+    public List<AccountDTO> accountV1(){
         List<Account> accounts = accountService.findAll();
         List<AccountDTO> result = accounts.stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
         return result;
     }
+
+
+
     @PostMapping("/api/accounts")
     public AccountDTO createAccount(@RequestBody Account account){
         Long id = accountService.join(account);

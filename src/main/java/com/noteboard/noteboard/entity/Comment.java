@@ -22,27 +22,19 @@ public class Comment {
     private String content;
     private String writer;
 
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
-
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public void setPost(Post post){
-        this.post = post;
+    public void setPsot(Post post){
+        this.post=post;
         post.getComments().add(this);
     }
-
-    public void setAccount(Account account){
-        this.account=account;
-        account.getComments().add(this);
-    }
-
 
 }

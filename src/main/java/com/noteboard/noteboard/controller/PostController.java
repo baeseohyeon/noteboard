@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -77,7 +78,8 @@ public class PostController {
     public String detail(@PathVariable("id") Long id, Model model){
         Post post = postService.findOne(id);
         PostDTO postDto = new PostDTO(post);
-        List<CommentDTO> commentDTOList = postDto.getCommentDTOList();
+        List<Comment> comments = commentService.findCommentsInPost(post);
+        List<CommentDTO> commentDTOList = comments.stream().map(comment->new CommentDTO(comment)).collect(Collectors.toList());;
         model.addAttribute("postDto",postDto);
         model.addAttribute("commentDtos",commentDTOList);
         return "board/detail.html";
@@ -91,8 +93,6 @@ public class PostController {
         Account account = accountAdapter.getAccount();
         Post post = postService.findOne(id);
         Account postAccount = post.getAccount();
-        System.out.println(postAccount);
-        System.out.println(account);
         if (account.getId() == postAccount.getId()) {
             PostDTO postDtO = new PostDTO(post);
             model.addAttribute("postDto", postDtO);

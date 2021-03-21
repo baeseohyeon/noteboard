@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface UploadFileRepository extends JpaRepository<UploadFile,Long> {
 
-    @Query("select f from UploadFile f where post_id = :id")
+    @Query("select f from UploadFile f where f.post.id = :id")
     List<UploadFile> findAllByPostId(Long id);
 }

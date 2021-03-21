@@ -18,7 +18,9 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-
+    public List<Comment> findCommentsByPostId(Long postId){
+        return commentRepository.findCommentsByPostId(postId);
+    }
     public List<Comment> findCommentsInPost(Post post) {
         return commentRepository.findCommentsByPost(post);
     }
@@ -27,6 +29,7 @@ public class CommentService {
         commentRepository.save(comment);
         return comment.getId();
     }
+
 
     public void deleteComment(Long commentId){
         commentRepository.deleteById(commentId);

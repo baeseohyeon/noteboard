@@ -13,40 +13,17 @@ import java.util.Objects;
 
 @Entity
 @Getter @Setter
-public class Account{
+public class Account {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "account_id")
     private Long id;
 
     private String username;
     private String email;
     private String password;
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    private List<Post> posts = new ArrayList<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    private List<Comment> comments = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "account")
-    private List<Message> messages = new ArrayList<>();
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return Objects.equals(id, account.id) && Objects.equals(username, account.username) && Objects.equals(email, account.email) && Objects.equals(password, account.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, email, password);
-    }
 }
+
+
+

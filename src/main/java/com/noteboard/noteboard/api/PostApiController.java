@@ -97,13 +97,7 @@ public class PostApiController {
         return result;
     }
 
-    @GetMapping("/api/v3/posts")
-    public List<PostDTO> postsv3(){
-        List<Post> resultList = em.createQuery("select p from Post p" +
-                " join fetch p.account a", Post.class).getResultList();
-        List<PostDTO> collect = resultList.stream().map(post -> new PostDTO(post)).collect(Collectors.toList());
-        return collect;
-    }
+
 
 
 
